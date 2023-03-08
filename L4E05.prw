@@ -37,8 +37,8 @@ Return
 
 // Função para o cálculo do valor do aluguel do veículo.
 Static Function Calcula1(nValor1, nValor2)
-    local nQuilometro := (val(nValor1) * 0,15) // Cada quilômetro custa  R$0.15
-    local nDias       := (val(nValor2) * 60) // Cada dia de aluguel custa R$ 60,00
+    local nQuilometro := (val(nValor1) * 0,15)  // Cada quilômetro custa  R$0.15
+    local nDias       := (val(nValor2) * 60)    // Cada dia de aluguel custa R$ 60,00
     local nCount      := 0
     local cAux1       := alltrim(nValor1)
     local cAux2       := alltrim(nValor2)

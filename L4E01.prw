@@ -23,7 +23,7 @@ User Function AdvPL01()
     //Definindo posicionamento e tamanho do elemento e solicitando o segundo número ao usuário.
     @ 040, 015 SAY "Digite o segundo número:"   SIZE 120, 07 OF oJanela PIXEL
     @ 050, 015 MSGET nUser2                     SIZE 120, 07 OF oJanela PIXEL PICTURE "9999999999"
-
+?
     // Definindo posicionamento e tamanho do botão a executar a ação das quatro operações.
     @ 070, 015 BUTTON "Pressione aqui para as quatro operações!" SIZE 120, 15 OF oJanela PIXEL;
     ACTION ( OP(nUser1, nUser2) )

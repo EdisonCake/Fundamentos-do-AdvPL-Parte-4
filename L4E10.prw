@@ -1,9 +1,11 @@
 #INCLUDE 'TOTVS.CH'
 
 User Function AdvPl10()
+    // Declaração de variáveis.
     local nHora     := Space(3)
     local nValHora  := Space(7)
     
+    // Variáveis privadas para a criação da janela com os campos de preenchimento automático.
     local cTitle    := "Folha de Pagamento"
     Private oJanela, oGrp1, oGrp2
     Private oSalBru, cSalBru := ""
@@ -13,6 +15,7 @@ User Function AdvPl10()
     Private oFGTS, cFGTS     := ""
     Private oTot, cTot       := ""
 
+    // Definições de tamanho da janela.
     Private nJanLarg := 300
     Private nJanAlt  := 300
 
@@ -61,6 +64,7 @@ User Function AdvPl10()
     ACTIVATE MSDIALOG oJanela CENTERED
 Return 
 
+// Função para o cálculo e criação das respostas para exibição.
 Static Function Folha(nHora, nValHora)
     local nBruto := val(nHora) * val(nValHora)
     local nLiq   := 0
@@ -69,9 +73,11 @@ Static Function Folha(nHora, nValHora)
     local nFGTS  := 0
     local nTot   := 0
 
+    // Aqui, a exibição do salário bruto é atualizada.
     cSalBru := "Salário Bruto: " + cvaltochar(nHora) + " * " + cvaltochar(nValHora) + " = R$ " + cvaltochar(noround(nBruto, 2))
     oSalBru:Refresh()
 
+    // Com base no valor do salário bruto, é feita a atualização do campo de "Imposto de Renda".
     Do Case
         Case nBruto < 1200
             cIR := "Isento"
@@ -90,18 +96,22 @@ Static Function Folha(nHora, nValHora)
             oIR:Refresh()
     end case
 
+    // Nesse bloco é feito o cálculo e a atualização do campo "INSS"
     nINSS := (nBruto * 10) / 100
     cINSS := " - R$ " + cvaltochar(noround(nINSS, 2))
     oINSS:Refresh()
 
+    // Nesse bloco é feito o cálculo e a atualização do campo "FGTS"
     nFGTS := (nBruto * 11) / 100
     cFGTS := " - R$ " + cvaltochar(noround(nFGTS, 2))
     oFGTS:Refresh()
 
+    // Nesse bloco é feito o cálculo e a atualização do campo "INSS"
     nTot := nIR + nINSS
     cTot := " R$ " + cvaltochar(noround(nTot, 2))
     oTot:Refresh()
 
+    // Nesse bloco é feito o cálculo e a atualização do campo de salário líquido.
     nLiq := nBruto - nTot
     cSalLiq := "Salário Liquido: R$ " + cvaltochar(noround(nLiq, 2))
     oSalLiq:Refresh()

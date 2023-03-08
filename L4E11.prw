@@ -3,20 +3,25 @@
 #INCLUDE 'TOPCONN.CH'
 
 User Function AdvPl11()
+    // Declaração de variáveis
     local cTitle := "Pesquisa de Produto"
     Private oJanela, oGrp
     Private cProduto := space(30)
 
+    // Definição de tamanho da janela a ser criada.
     private nJanAlt  := 130
     private nJanLarg := 300
 
+    // Iniciando a janela com os elementos
     DEFINE MSDIALOG oJanela TITLE cTitle FROM 000, 000 TO nJanAlt, nJanLarg PIXEL
 
+        // Grupo para a busca dos produtos
         @ 003, 003 GROUP oGrp TO (nJanAlt / 2) - 3 , (nJanLarg / 2) - 3 PROMPT "Busca de Produtos: " OF oJanela PIXEL
 
         @ 015, 015 SAY "Código do Produto: "  SIZE 057, 007 OF oJanela PIXEL
         @ 025, 015 MSGET cProduto             SIZE 120, 008 OF oJanela PIXEL
 
+        // Botão para realizar a busca no banco de dados.
         @ 040, 015 BUTTON "Pesquisar"         SIZE 120, 010 OF oJanela PIXEL;
         ACTION ( BuscaCOD() )
 
@@ -34,6 +39,7 @@ Static Function BuscaCOD()
     // Aqui é preparado o ambiente com base na empresa, filial, tabela e módulos selecionados.
     PREPARE ENVIRONMENT EMPRESA '99' FILIAL '01' TABLES 'SB1' MODULO 'COM'
 
+    // Aqui é criado o select com o produto que o usuário desejar pesquisar.
     cQuery := "SELECT * FROM " + RetSqlName('SB1') + " WHERE B1_COD = '" + alltrim(cProduto) + "' AND D_E_L_E_T_ = ' '"
 
     // E aqui é feita a pesquisa no banco de dados.

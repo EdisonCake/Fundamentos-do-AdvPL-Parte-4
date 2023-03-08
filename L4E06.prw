@@ -1,9 +1,11 @@
 #INCLUDE 'TOTVS.CH'
 
+// Informações "chumbadas".
 #DEFINE cUser "edisoncake"
 #DEFINE cSenha "BoloBolo"
 
 User Function AdvPL06()
+    // Declaração de variáveis.
     Local aArea := GetArea()
     Local oGrpLog
     Local oBtnConf
@@ -53,6 +55,7 @@ User Function AdvPL06()
     RestArea(aArea)
 Return lRetorno
 
+// Função que valida a entrada dos dados e verifica se estão de acordo com as informações "chumbadas" no código.
 Static Function fVldUsr()
     Local cUsrAux := Alltrim(cGetUsr)
     Local cPswAux := Alltrim(cGetPsw)

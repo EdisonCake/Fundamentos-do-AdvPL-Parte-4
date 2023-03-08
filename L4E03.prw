@@ -32,13 +32,17 @@ User Function AdvPL03()
     ACTIVATE MSDIALOG oJanela CENTERED
 Return 
 
+// Função para o cálculo do novo salário através de dois parâmetros passados.
 Static Function Adjust(nValor1, nValor2)
+
+    // Declaração de variáveis da função.
     local cAux      := alltrim(nValor1)
     local nNovo     := 0
     local nCount    := 0
     local nValida   := 0
     local nASC      := 0
 
+    // Iniciado um contador para fazer a validação de entrada. Qualquer coisa diferente de um número ou um "." será barrado.
     For nCount := 1 to len(cAux)
         nASC := ASC(SUBSTR(cAux, nCount))
 
@@ -47,11 +51,14 @@ Static Function Adjust(nValor1, nValor2)
         endif
     Next
 
+    // Se a validação de entrada retornar positivo, o usuário recebe um aviso de entrada inválida, senão, segue com o programa de cálculo.
     if nValida > 0
         MsgStop("Entrada de salário inválida.", "Atenção!")
         cFinal:= ""
         oFinal:Refresh()
     else
+
+        // O novo salário é atribuido ao objeto de exibição e o mesmo é atualizado.
         nNovo := val(nValor1) + ((val(nValor1) * val(nValor2)) / 100)
         cFinal := cvaltochar(noround(nNovo, 2))
         oFinal:Refresh()

@@ -1,14 +1,18 @@
 #INCLUDE 'TOTVS.CH'
 
 User Function AdvPl08()
+    // Declaração de variáveis.
     local nPeso   := space(30)
     local nAltura := space(30)
 
+    // Informações para a definição da janela
     local cTitle := "Cálculo de IMC"
     Private oJanela, oPeso, oAtltura
 
+    // Criação da janela
     DEFINE MSDIALOG oJanela TITLE cTitle FROM 000, 000 TO 250, 300 PIXEL
 
+    // Label e get do peso e altura do usuário para o cálculo.
     @ 010, 015 SAY "Digite seu peso"             SIZE 120, 07 OF oJanela PIXEL
     @ 020, 015 MSGET oPeso VAR nPeso             SIZE 120, 07 OF oJanela PIXEL
     oPeso:cPlaceHold := "Digite o seu peso"
@@ -17,9 +21,11 @@ User Function AdvPl08()
     @ 050, 015 msget oAltura VAR nAltura         SIZE 120, 07 OF oJanela PIXEL
     oAltura:cPlaceHold := "Digite sua altura"
 
+    // Botão para chamar a função de cálculo do IMC passando os parâmetros do usuário
     @ 070, 015 BUTTON "Cálculo IMC"              SIZE 120, 15 OF oJanela PIXEL;
     ACTION ( IMC(nPeso, nAltura) )
 
+    // Botão extra para encerramento do programa apenas.
     @ 090, 035 BUTTON "Finalizar"                SIZE 080, 15 OF oJanela PIXEL;
     ACTION ( oJanela:End() )
 
@@ -27,6 +33,7 @@ User Function AdvPl08()
 
 Return 
 
+// Função de cálculo do IMC.
 Static Function IMC(nPeso, nAltura)
     local nIMC     := val(nPeso) / (val(nAltura) ^ 2)
     local nCount   := 0
@@ -36,6 +43,8 @@ Static Function IMC(nPeso, nAltura)
     local cAux1    := alltrim(nPeso)
     local cAux2    := alltrim(nAltura)
     
+    // Contador para fazer a validação de entrada do usuário.
+    // Se qualquer coisa que não seja um número ou um "." for digitado, será recusado.
     For nCount := 1 to len(cAux1)
         nASC := ASC(SUBSTR(cAux1, nCount))
 
@@ -52,12 +61,15 @@ Static Function IMC(nPeso, nAltura)
         endif
     Next
 
+    // Se a validação for positiva, o usuário recebe um aviso, senão, é informado o IMC com base em alguns parâmetros.
     If (nValida1 > 0) .or. (nValida2 > 0) .or. (nValida1 > 0 .and. nValida2 > 0)
         MsgStop("Entrada(s) inválida(s).", "Atenção!")
     elseif cAux1 == "" .or. cAux2 == "" .or. (cAux1 == "" .and. cAux2 == "")
         MsgStop("Há informações em branco!", "Atenção")
     Else
         Do CASE
+
+            // Com base no resultado do IMC do usuário, é exibida uma mensagem de acordo.
             Case nIMC < 18.5 
                 FwAlertInfo("Nível de IMC: " + cvaltochar(round(nIMC, 1)) + " - Magreza. Obesidade (Grau): 0")
             Case nIMC >= 18.5 .and. nIMC < 24.9 
